@@ -1,26 +1,31 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"; 
-// import dotenv from "dotenv";
 
-// dotenv.config();
-
-// const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const genAI = new GoogleGenerativeAI("AIzaSyAX5vhQ0BY6BAjmnacWQraKB1KaVj-QTsc");
 const userInput = document.getElementById("userInput");
 const chatBox = document.getElementById("chatBox");
 
 function sendMessage() {
     if (userInput.value.trim() === "") return;
-    
+
     const userMessage = document.createElement("div");
     userMessage.className = "chat-message user";
     userMessage.textContent = userInput.value;
     chatBox.appendChild(userMessage);
-    
-    generateImage(userInput.value);
+
+    // 로딩 프로그래스바 추가
+    const loadingBar = document.createElement("div");
+    loadingBar.className = "loading-bar";
+    loadingBar.textContent = "Loading...";
+    chatBox.appendChild(loadingBar);
+
+    // 스크롤을 맨 아래로 이동 (로딩바 추가 후)
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    generateImage(userInput.value, loadingBar);
     userInput.value = "";
 }
 
-async function generateImage(prompt) {
+async function generateImage(prompt, loadingBar) {
     const model = genAI.getGenerativeModel({
         model: "gemini-2.0-flash-exp-image-generation",
         generationConfig: {
@@ -31,6 +36,9 @@ async function generateImage(prompt) {
     try {
         const response = await model.generateContent(prompt);
         const parts = response.response.candidates[0].content.parts;
+
+        // 로딩 프로그래스바 제거
+        chatBox.removeChild(loadingBar);
 
         for (const part of parts) {
             if (part.text) {
@@ -55,10 +63,15 @@ async function generateImage(prompt) {
             }
         }
 
-        // 스크롤을 맨 아래로 이동
-        chatBox.scrollTop = chatBox.scrollHeight;
+        // DOM 업데이트 후 스크롤을 맨 아래로 이동
+        setTimeout(() => {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 0);
     } catch (error) {
         console.error("Error generating content:", error);
+
+        // 로딩 프로그래스바 제거 (에러 발생 시)
+        chatBox.removeChild(loadingBar);
     }
 }
 
