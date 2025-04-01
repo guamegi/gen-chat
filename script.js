@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const apiKey = process.env.API_KEY;
-const genAI = new GoogleGenerativeAI(apiKey);
+const genAI = new GoogleGenerativeAI("AIzaSyAX5vhQ0BY6BAjmnacWQraKB1KaVj-QTsc");
 const userInput = document.getElementById("userInput");
 const menuList = document.getElementById("menuList");
 const addChatButton = document.getElementById("addChatButton");
@@ -83,7 +82,6 @@ function switchChat(chatId) {
 
 // 메시지 전송 함수
 function sendMessage() {
-<<<<<<< HEAD
     const message = userInput.value.trim();
     if (message === "") return;
 
@@ -143,44 +141,14 @@ async function generateResponse(prompt, loadingBar, chatId) {
             responseModalities: ['Text', 'Image']
         },
     });
-=======
-  if (userInput.value.trim() === "") return;
 
-  const userMessage = document.createElement("div");
-  userMessage.className = "chat-message user";
-  userMessage.textContent = userInput.value;
-  chatBox.appendChild(userMessage);
+    try {
+        const response = await model.generateContent(prompt);
+        const parts = response.response.candidates[0].content.parts;
 
-  // 로딩 프로그래스바 추가
-  const loadingBar = document.createElement("div");
-  loadingBar.className = "loading-bar";
-  loadingBar.textContent = "Loading...";
-  chatBox.appendChild(loadingBar);
+        // 로딩 프로그래스바 제거
+        chatBox.removeChild(loadingBar);
 
-  // 스크롤을 맨 아래로 이동 (로딩바 추가 후)
-  chatBox.scrollTop = chatBox.scrollHeight;
-
-  generateImage(userInput.value, loadingBar);
-  userInput.value = "";
-}
-
-async function generateImage(prompt, loadingBar) {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash-exp-image-generation",
-    generationConfig: {
-      responseModalities: ["Text", "Image"],
-    },
-  });
->>>>>>> f6bf919d2f8c407a2e3d59f1666f82c864ddab08
-
-  try {
-    const response = await model.generateContent(prompt);
-    const parts = response.response.candidates[0].content.parts;
-
-    // 로딩 프로그래스바 제거
-    chatBox.removeChild(loadingBar);
-
-<<<<<<< HEAD
         // 응답 처리
         for (const part of parts) {
             if (part.text) {
@@ -217,44 +185,9 @@ async function generateImage(prompt, loadingBar) {
 
         // 에러 메시지 표시
         addMessageToChat("bot", "오류가 발생했습니다. 다시 시도해주세요.");
-=======
-    for (const part of parts) {
-      if (part.text) {
-        // 텍스트 응답 처리
-        const botMessage = document.createElement("div");
-        botMessage.className = "chat-message bot";
-        botMessage.textContent = part.text;
-        chatBox.appendChild(botMessage);
-      } else if (part.inlineData) {
-        // 이미지 응답 처리
-        const imageData = part.inlineData.data;
-        const imgElement = document.createElement("img");
-        imgElement.src = `data:image/png;base64,${imageData}`;
-        imgElement.style.maxWidth = "100%"; // 이미지 크기 조정
-        imgElement.style.borderRadius = "10px";
-        imgElement.style.marginTop = "10px";
-
-        const imageContainer = document.createElement("div");
-        imageContainer.className = "chat-message bot";
-        imageContainer.appendChild(imgElement);
-        chatBox.appendChild(imageContainer);
-      }
->>>>>>> f6bf919d2f8c407a2e3d59f1666f82c864ddab08
     }
-
-    // DOM 업데이트 후 스크롤을 맨 아래로 이동
-    setTimeout(() => {
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }, 0);
-  } catch (error) {
-    console.error("Error generating content:", error);
-
-    // 로딩 프로그래스바 제거 (에러 발생 시)
-    chatBox.removeChild(loadingBar);
-  }
 }
 
-<<<<<<< HEAD
 // 이벤트 리스너 추가
 sendButton.addEventListener("click", sendMessage);
 userInput.addEventListener("keypress", (event) => {
@@ -262,6 +195,3 @@ userInput.addEventListener("keypress", (event) => {
         sendMessage();
     }
 });
-=======
-window.sendMessage = sendMessage;
->>>>>>> f6bf919d2f8c407a2e3d59f1666f82c864ddab08
