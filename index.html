@@ -8,14 +8,33 @@
     <script type="module" src="dist/bundle.js"></script>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="chat-header">
+    <div class="app-container">
+        <!-- 상단 헤더 -->
+        <header class="app-header">
             <h1>Gen Chat</h1>
-        </div>
-        <div class="chat-box" id="chatBox"></div>
-        <div class="chat-input">
-            <input type="text" id="userInput" placeholder="ex) 하늘을 나는 돼지를 그려줘">
-            <button onclick="sendMessage()">전송</button>
+        </header>
+
+        <!-- 메인 영역 -->
+        <div class="app-main">
+            <!-- 좌측 메뉴 패널 -->
+            <aside class="menu-panel">
+                <ul id="menuList">
+                    <li class="menu-item active" data-chat-id="chat-1">메뉴 1</li>
+                </ul>
+                <button id="addChatButton" class="add-chat-button">+</button>
+            </aside>
+
+            <!-- 우측 콘텐츠 영역 -->
+            <section class="content-area">
+                <!-- 채팅 히스토리 -->
+                <div class="chat-box" id="chatBox"></div>
+
+                <!-- 입력 영역 -->
+                <div class="chat-input">
+                    <input type="text" id="userInput" placeholder="메시지를 입력하세요...">
+                    <button id="sendButton">전송</button>
+                </div>
+            </section>
         </div>
     </div>
 </body>
