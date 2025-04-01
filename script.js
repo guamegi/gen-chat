@@ -6,6 +6,11 @@ const menuList = document.getElementById("menuList");
 const addChatButton = document.getElementById("addChatButton");
 const chatBox = document.getElementById("chatBox");
 const sendButton = document.getElementById("sendButton");
+const themeToggleButton = document.getElementById("themeToggleButton");
+
+// 초기 테마 설정
+let isDarkTheme = true; // 기본값: 다크 테마
+document.body.classList.add("dark-theme");
 
 let chatCounter = 1; // 초기 메뉴 카운터
 const chats = { "chat-1": [] }; // 각 대화창의 메시지를 저장
@@ -27,7 +32,7 @@ addChatButton.addEventListener("click", () => {
     // 새로운 메뉴 항목 추가
     const newMenuItem = document.createElement("li");
     newMenuItem.className = "menu-item";
-    newMenuItem.textContent = `메뉴 ${chatCounter}`;
+    newMenuItem.textContent = `새 탭 ${chatCounter}`;
     newMenuItem.dataset.chatId = newChatId;
 
     // 메뉴 클릭 이벤트 추가
@@ -187,6 +192,24 @@ async function generateResponse(prompt, loadingBar, chatId) {
         addMessageToChat("bot", "오류가 발생했습니다. 다시 시도해주세요.");
     }
 }
+
+// 테마 토글 함수
+function toggleTheme() {
+    isDarkTheme = !isDarkTheme;
+
+    if (isDarkTheme) {
+        document.body.classList.add("dark-theme");
+        document.body.classList.remove("light-theme");
+        themeToggleButton.textContent = "🌓"; // 다크 테마 아이콘
+    } else {
+        document.body.classList.add("light-theme");
+        document.body.classList.remove("dark-theme");
+        themeToggleButton.textContent = "☀️"; // 화이트 테마 아이콘
+    }
+}
+
+// 테마 변경 버튼 클릭 이벤트
+themeToggleButton.addEventListener("click", toggleTheme);
 
 // 이벤트 리스너 추가
 sendButton.addEventListener("click", sendMessage);
