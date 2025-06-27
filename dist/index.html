@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GenChat AI</title>
+    <!-- 스타일은 React에서 import 하므로 별도 link 불필요 -->
+  </head>
+  <body>
+    <div id="root">
+      <!-- 상단 헤더 -->
+      <header class="app-header">
+        <h2>GenChat AI</h2>
+        <button id="themeToggleButton" class="theme-toggle-button">🌓</button>
+      </header>
+
+      <!-- 메인 영역 -->
+      <div class="app-main">
+        <!-- 좌측 메뉴 패널 -->
+        <aside class="menu-panel">
+          <ul id="menuList">
+            <li class="menu-item active" data-chat-id="chat-1">새 탭 1</li>
+          </ul>
+          <button id="addChatButton" class="add-chat-button">+</button>
+        </aside>
+
+        <!-- 우측 콘텐츠 영역 -->
+        <section class="content-area">
+          <!-- 채팅 히스토리 -->
+          <div class="chat-box" id="chatBox">
+            <div id="introMessage" class="intro-message">
+              <h2>AI 이미지 생성기</h2>
+              보고 싶은 내용을 설명하여 생성 AI를 사용해 이미지를 생성하세요.
+            </div>
+          </div>
+
+          <!-- 입력 영역 -->
+          <div class="chat-input">
+            <input
+              type="text"
+              id="userInput"
+              placeholder="무엇을 보고 싶으신가요?"
+            />
+            <button id="sendButton">전송</button>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script src="./bundle.js"></script>
+  </body>
+</html>
