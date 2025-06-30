@@ -7,9 +7,7 @@ Gen Chat is a chatbot project powered by Google Generative AI. Based on the sent
 - Engage in conversation with the chatbot to create new images
 
 ## Tech Stack
-- HTML5
-- CSS3
-- JavaScript
+- React.js
 - Generative AI
 - Webpack
 
